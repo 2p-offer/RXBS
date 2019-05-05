@@ -2,14 +2,13 @@ package com.wrx.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.wrx.api.HadGo;
 import com.wrx.api.WantGo;
+import com.wrx.dao.HadDao;
 import com.wrx.dao.WantDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,11 +17,11 @@ import java.util.List;
  * @Date: 2019/5/4
  */
 @Controller
-@RequestMapping("/data")
-public class DataManagerController {
+@RequestMapping("/had")
+public class HadDataManagerController {
 
     @Autowired
-    WantDao wantDao;
+    HadDao hadDao;
     @GetMapping("/getTest")
     @ResponseBody
     public String getTestData() {
@@ -32,16 +31,23 @@ public class DataManagerController {
     @GetMapping("getAll")
     @ResponseBody
     public String getAll(){
-        List<WantGo> all = wantDao.getAll();
+        List<HadGo> all = hadDao.getAll();
         String s = JSONArray.toJSONString(all);
-        return  s;
+        return s;
     }
 
     @GetMapping("getDataById/{id}")
     @ResponseBody
     public String getDataById(@PathVariable("id") int id){
-        WantGo all = wantDao.getDataById(id);
+        HadGo all = hadDao.getDataById(id);
         String s = JSONObject.toJSONString(all);
         return  s;
+    }
+
+    @PostMapping
+    @ResponseBody
+    public String addData(HadGo wantGo){
+        hadDao.addData(wantGo);
+        return "ok";
     }
 }
