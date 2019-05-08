@@ -9,7 +9,9 @@ import com.wrx.dao.WantDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -49,5 +51,22 @@ public class HadDataManagerController {
     public String addData(HadGo wantGo){
         hadDao.addData(wantGo);
         return "ok";
+    }
+
+    @ResponseBody
+    @PostMapping("/uploadphoto")
+    String uploadExcel(@RequestParam(value = "uploadphoto", required = false) MultipartFile file) {
+        try {
+            String fileName = file.getName();
+            File f = new File("F:\\bishephoto", fileName);
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            file.transferTo(f);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "no";
+        }
+        return "Ok";
     }
 }
