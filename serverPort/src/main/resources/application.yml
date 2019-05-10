@@ -1,6 +1,12 @@
+#  http://www.cnblogs.com/luoluoshidafu/p/9504106.html
 server:
   session-timeout: 1800
   port: 8200
+  ssl:
+    key-store-password : keytool
+    keyStoreType : PKCS12
+    key-store : classpath:keystore.p12
+    keyAlias : tomcat
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
